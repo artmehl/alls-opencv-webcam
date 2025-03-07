@@ -5,6 +5,16 @@ import serial
 import pynmea2
 import multiprocessing
 
+width = 1280
+height = 720
+duration = 10
+fps = 10.0
+limit_n_frames = (fps * duration)
+output_folder = 'photo_teste/'
+lat = '0.0'
+long = '0.0'
+n_frames = 0
+
 def get_gps_data(queue):
     ser = serial.Serial('/dev/ttyACM0')
     last_lat = None
@@ -25,15 +35,7 @@ def main():
     process.start()
     time.sleep(3)
     print('Started Capturing')
-    duration = 10
-    fps = 10.0
-    width = 1280
-    height = 720
-    filename = "output/teste.mp4"
-    output_folder = 'photo_teste/'
-    limit_n_frames = (fps * duration)
-    lat = '0.0'
-    long = '0.0'
+    
     if not os.path.exists('output'):
         os.makedirs('output')
 
@@ -46,7 +48,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     cap.grab()
-    n_frames = 0
+
     start_time = time.time()
     while n_frames < limit_n_frames:
         if not queue.empty():
