@@ -5,16 +5,6 @@ import serial
 import pynmea2
 import multiprocessing
 
-width = 1280
-height = 720
-duration = 10
-fps = 10.0
-limit_n_frames = (fps * duration)
-output_folder = 'photo_teste/'
-lat = '0.0'
-long = '0.0'
-n_frames = 0
-
 def get_gps_data(queue):
     ser = serial.Serial('/dev/ttyACM0')
     last_lat = None
@@ -30,6 +20,16 @@ def get_gps_data(queue):
         time.sleep(0.1)
                 
 def main():
+    width = 1280
+    height = 720
+    duration = 10
+    fps = 10.0
+    limit_n_frames = (fps * duration)
+    output_folder = 'photo_teste/'
+    lat = '0.0'
+    long = '0.0'
+    n_frames = 0
+
     queue = multiprocessing.Queue()
     process = multiprocessing.Process(target=get_gps_data, args=(queue,))
     process.start()
