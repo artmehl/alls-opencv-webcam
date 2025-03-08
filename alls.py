@@ -30,6 +30,9 @@ def main():
     long = '0.0'
     n_frames = 0
 
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
     queue = multiprocessing.Queue()
     process = multiprocessing.Process(target=get_gps_data, args=(queue,))
     process.start()
